@@ -1,0 +1,33 @@
+version: '3.7'
+services: 
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: 'laravel_app_image'
+    ports:
+      - 8080:80
+    volumes:
+      - ./src:/var/www/html
+    container_name: laravel_app
+  db:
+    image: mariadb:10.5.6
+    restart: always
+    ports: 
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: 'laravel_db'
+      MYSQL_ROOT_PASSWORD: "1234"
+    volumes:
+      - ./db:/var/lib/mysql
+    container_name: laravel_db
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports: 
+      - 8081:80
+    environment:
+      PMA_HOSTS: laravel_db
+      PMA_USER: root
+      PMA_PASSWORD: 1234
+    container_name: laravel_phpmyadmin
