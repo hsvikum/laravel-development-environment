@@ -27,3 +27,7 @@ RUN chown -R www-data:www-data /var/www/html \
 
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt-get install -y nodejs
+
+RUN groupadd --gid 1000 phpuser \
+    && useradd --uid 1000 --gid phpuser --shell /bin/bash --create-home phpuser
+USER phpuser
