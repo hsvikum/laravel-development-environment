@@ -31,3 +31,16 @@ services:
       PMA_USER: root
       PMA_PASSWORD: 1234
     container_name: laravel_phpmyadmin
+  redis:
+    image: redis:6.0.9-alpine
+    restart: always
+    container_name: laravel_redis
+  phpredmin:
+    image: sasanrose/phpredmin
+    environment:
+      - PHPREDMIN_DATABASE_REDIS_0_HOST=redis
+    ports:
+      - "8082:80"
+    depends_on:
+      - redis
+    container_name: laravel_phpredmin
