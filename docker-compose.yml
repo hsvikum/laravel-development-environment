@@ -10,6 +10,9 @@ services:
     volumes:
       - ./src:/var/www/html
     container_name: laravel_app
+    depends_on:
+      - db
+      - redis
   db:
     image: mariadb:10.5.6
     restart: always
