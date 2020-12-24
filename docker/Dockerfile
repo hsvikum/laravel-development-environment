@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
         zip \
         curl \
         unzip \
+        git \
     && docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql \
@@ -28,6 +29,17 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt-get install -y nodejs
 
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+EXPOSE 8083
+
 RUN groupadd --gid 1000 phpuser \
     && useradd --uid 1000 --gid phpuser --shell /bin/bash --create-home phpuser
+
+RUN mkdir /var/lib/code-server
+RUN chown phpuser -R /var/lib/code-server
+
+ADD start.sh /
+RUN chmod +x /start.sh
+
+CMD ["/start.sh"]
 USER phpuser

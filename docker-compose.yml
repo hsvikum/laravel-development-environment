@@ -2,13 +2,16 @@ version: '3.7'
 services: 
   app:
     build:
-      context: .
-      dockerfile: docker/Dockerfile
+      context: ./docker
+      dockerfile: Dockerfile
     image: 'laravel_app_image'
     ports:
       - 8080:80
+      - 8083:8083
     volumes:
       - ./src:/var/www/html
+    environment:
+      PASSWORD: 1234
     container_name: laravel_app
     depends_on:
       - db
