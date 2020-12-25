@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: 'laravel_app_image'
     ports:
-      - 8080:80
+      - 8000:8000
       - 8083:8083
     volumes:
       - ./src:/var/www/html
